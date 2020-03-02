@@ -1,8 +1,10 @@
 package com.redecommunity.hub.manager;
 
+import com.redecommunity.common.shared.databases.mysql.dao.Table;
 import com.redecommunity.common.shared.util.ClassGetter;
 import com.redecommunity.hub.Hub;
 import com.redecommunity.hub.scoreboard.manager.ScoreboardManager;
+import com.redecommunity.hub.spawn.manager.SpawnManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
@@ -13,7 +15,9 @@ public class StartManager {
     public StartManager() {
         new ListenerManager();
 
-        new ScoreboardManager();
+        new TableManager();
+
+        new DataManager();
     }
 }
 
@@ -33,5 +37,29 @@ class ListenerManager {
                 }
             }
         });
+    }
+}
+
+class TableManager {
+    TableManager() {
+        ClassGetter.getClassesForPackage(Hub.class).forEach(clazz -> {
+            if (Table.class.isAssignableFrom(clazz)) {
+                try {
+                    Table table = (Table) clazz.newInstance();
+
+                    table.createTable();
+                } catch (IllegalAccessException | InstantiationException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+    }
+}
+
+class DataManager {
+    DataManager() {
+        new ScoreboardManager();
+
+        new SpawnManager();
     }
 }
