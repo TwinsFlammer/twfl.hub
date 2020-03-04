@@ -55,7 +55,7 @@ public class SpawnStorage extends Table {
                 Connection connection = this.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
         ) {
-            preparedStatement.executeQuery();
+            preparedStatement.execute();
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
