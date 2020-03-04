@@ -19,8 +19,9 @@ public class PlayerDamageListener implements Listener {
         if (entity instanceof Player) {
             EntityDamageEvent.DamageCause cause = event.getCause();
 
+            event.setCancelled(true);
+
             if (cause == EntityDamageEvent.DamageCause.VOID) {
-                event.setCancelled(true);
 
                 Location location = SpawnManager.DEFAULT_SPAWN;
 
