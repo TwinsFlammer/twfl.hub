@@ -1,6 +1,6 @@
 package com.redecommunity.hub.selector.data;
 
-import com.redecommunity.api.spigot.hologram.CustomHologram;
+import com.redecommunity.api.spigot.hologram.data.CustomHologram;
 import com.redecommunity.api.spigot.inventory.item.CustomItem;
 import com.redecommunity.common.shared.language.enums.Language;
 import com.redecommunity.common.shared.permissions.user.data.User;
