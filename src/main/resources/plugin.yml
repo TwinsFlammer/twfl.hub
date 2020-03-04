@@ -3,3 +3,4 @@ main: com.redecommunity.hub.Hub
 version: 1.0-SNAPSHOT
 depend:
   - Api
+  - Citizens
