@@ -1,6 +1,6 @@
 package com.redecommunity.hub.selector.listener;
 
-import com.redecommunity.api.spigot.hologram.CustomHologram;
+import com.redecommunity.api.spigot.hologram.data.CustomHologram;
 import com.redecommunity.api.spigot.hologram.line.TextHologramLine;
 import com.redecommunity.common.shared.server.data.Server;
 import com.redecommunity.hub.selector.data.ServerInfo;
