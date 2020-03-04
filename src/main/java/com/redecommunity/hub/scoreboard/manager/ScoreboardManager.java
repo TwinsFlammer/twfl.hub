@@ -88,7 +88,7 @@ public class ScoreboardManager {
     }
 
     public static CustomBoard update(User user) {
-        Integer playerCount = ProxyServerManager.getProxyCountOnline();
+        Integer playerCount = ProxyServerManager.getUsers().size();
 
         CustomBoard customBoard = ScoreboardManager.getCustomBoards().getOrDefault(
                 user.getId(),
