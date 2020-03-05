@@ -26,7 +26,7 @@ public class AsyncPlayerChatListener implements Listener {
         if (!user.hasGroup(GroupNames.HELPER)) return;
 
         String message = String.format(
-                "%s§f%s §a» §f%s",
+                "%s§f%s §c» §7%s",
                 user.getPrefix(),
                 user.getDisplayName(),
                 event.getMessage()
