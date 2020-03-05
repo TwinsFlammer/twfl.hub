@@ -32,8 +32,13 @@
         </dependency>
         <!-- common -->
         <dependency>
-        <groupId>${project.groupId}</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>common-shared</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>common-spigot</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- api -->
