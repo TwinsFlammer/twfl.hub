@@ -11,8 +11,12 @@ import com.redecommunity.hub.selector.exception.UnknownServerException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import net.citizensnpcs.api.npc.NPC;
 import org.apache.commons.lang3.StringUtils;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 /**
@@ -113,5 +117,57 @@ public class ServerInfo {
         this.active = serverInfo.active;
         this.material = serverInfo.material;
         this.description = serverInfo.description;
+    }
+
+    public void spawn(NPC npc) {
+        Location location = this.getHologramLocation(npc);
+
+        Server server = this.getServer();
+
+        CustomHologram customHologram = new CustomHologram(location);
+
+        customHologram.appendLines(
+                "§e" + server.getDisplayName(),
+                "§b" + server.getPlayerCount() + "/" + server.getSlots()
+        );
+
+        customHologram.spawn();
+
+        this.hologram = customHologram;
+    }
+
+    public void despawn() {
+        this.hologram.despawn();
+    }
+
+    public void updateHologram() {
+        CustomHologram customHologram = this.hologram;
+
+        Server server = this.getServer();
+
+        System.out.println("atualiza ai tio");
+
+        customHologram.updateLines(
+                "§e" + server.getDisplayName(),
+                "§b" + server.getPlayerCount() + "/" + server.getSlots()
+        );
+    }
+
+    public void teleportHologram(NPC npc) {
+        Location location = this.getHologramLocation(npc);
+
+        CustomHologram customHologram = this.hologram;
+
+        customHologram.teleport(location);
+    }
+
+    private Location getHologramLocation(NPC npc) {
+        Entity npcEntity = npc.getEntity();
+
+        if (npcEntity.getType() == EntityType.PLAYER) {
+            Player player = (Player) npcEntity;
+
+            return player.getLocation().clone().add(0,0.7,0);
+        } else return npcEntity.getLocation().clone().add(0,0.7,0);
     }
 }
