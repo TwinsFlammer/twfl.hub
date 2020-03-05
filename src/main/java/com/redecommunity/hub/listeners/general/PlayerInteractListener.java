@@ -22,18 +22,12 @@ public class PlayerInteractListener implements Listener {
 
         User user = UserManager.getUser(player.getUniqueId());
 
-        if (user.hasGroup(GroupNames.MANAGER)) return;
-
-        event.setCancelled(true);
+        if (!user.hasGroup(GroupNames.MANAGER)) event.setCancelled(true);
 
         ItemStack inHand = player.getItemInHand(),
                 selectorItem = new SelectorItem().build();
 
-        System.out.println("Listener");
-
         if (inHand.isSimilar(selectorItem)) {
-            System.out.println("é similar");
-
             player.openInventory(
                     new SelectorInventory()
                             .build()
