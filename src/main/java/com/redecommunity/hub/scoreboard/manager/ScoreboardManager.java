@@ -40,12 +40,9 @@ public class ScoreboardManager {
 
                     if (player != null) {
                         try {
-
                             User user = UserManager.getUser(player.getUniqueId());
 
-                            CustomBoard customBoard = ScoreboardManager.update(user);
-
-                            customBoard.send(player);
+                            ScoreboardManager.update(user);
                         } catch (Exception exception) {
                             exception.printStackTrace();
                         }
@@ -90,17 +87,15 @@ public class ScoreboardManager {
     public static CustomBoard update(User user) {
         Integer playerCount = ProxyServerManager.getUsers().size();
 
-        CustomBoard customBoard = ScoreboardManager.getCustomBoards().getOrDefault(
-                user.getId(),
-                ScoreboardManager.create(user)
-        );
-
-        ScoreboardManager.setServerList(customBoard);
+        CustomBoard customBoard = ScoreboardManager.customBoards.get(user.getId());
 
         String prefix = ScoreboardManager.getPrefix(user);
 
         customBoard.set(14, " §fOnline §c» §f" + playerCount)
                 .set(2, " §fGrupo §c» §f" + prefix);
+
+        ScoreboardManager.setServerList(customBoard);
+
 
         return customBoard;
     }
