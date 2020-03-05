@@ -2,9 +2,12 @@ package com.redecommunity.hub.selector.manager;
 
 import com.google.common.collect.Lists;
 import com.redecommunity.common.shared.Common;
+import com.redecommunity.hub.Hub;
 import com.redecommunity.hub.selector.dao.ServerInfoDAO;
 import com.redecommunity.hub.selector.data.ServerInfo;
+import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
 import java.sql.ResultSet;
@@ -23,7 +26,8 @@ public class ServerInfoManager {
     public ServerInfoManager() {
         ServerInfoDAO serverInfoDAO = new ServerInfoDAO();
 
-        Common.getInstance().getScheduler().scheduleAtFixedRate(
+        Bukkit.getScheduler().runTaskTimer(
+                Hub.getInstance(),
                 () -> {
                     Set<ServerInfo> serverInfoSet = serverInfoDAO.findAll();
 
@@ -35,16 +39,30 @@ public class ServerInfoManager {
 
                             if (serverInfo1 == null) {
                                 ServerInfoManager.servers.add(serverInfo);
+
+                                NPC npc = ServerInfoManager.getNPC(serverInfo);
+
+                                System.out.println("É PRA SPAWNAR A PORRA DO ROLE");
+
+                                if (npc != null)
+                                    serverInfo.spawn(npc);
                             } else {
-                                if (!serverInfo.isSimilar(serverInfo1))
+                                if (!serverInfo.isSimilar(serverInfo1)) {
                                     serverInfo1.update(serverInfo);
+                                }
+
+                                try {
+                                    serverInfo1.updateHologram();
+                                } catch (Exception exception) {
+                                    exception.printStackTrace();
+                                }
                             }
                         });
                     }
                 },
                 0,
-                30,
-                TimeUnit.SECONDS
+                // mudar pra 15 segundos
+                20L
         );
     }
 
@@ -68,6 +86,10 @@ public class ServerInfoManager {
                 .filter(serverInfo -> serverInfo.getNpcId().equals(npc.getId()))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public static NPC getNPC(ServerInfo serverInfo) {
+        return CitizensAPI.getNPCRegistry().getById(serverInfo.getNpcId());
     }
 
     public static ServerInfo toServerInfo(ResultSet resultSet) throws SQLException {
