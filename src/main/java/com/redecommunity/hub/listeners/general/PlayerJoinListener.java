@@ -4,7 +4,11 @@ import com.redecommunity.api.spigot.scoreboard.CustomBoard;
 import com.redecommunity.common.shared.permissions.user.data.User;
 import com.redecommunity.common.shared.permissions.user.manager.UserManager;
 import com.redecommunity.hub.scoreboard.manager.ScoreboardManager;
+import com.redecommunity.hub.selector.NPCMethods;
 import com.redecommunity.hub.selector.item.SelectorItem;
+import com.redecommunity.hub.spawn.manager.SpawnManager;
+import net.citizensnpcs.api.CitizensAPI;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,6 +30,10 @@ public class PlayerJoinListener implements Listener {
 
         customBoard.send(player);
 
+        Location location = SpawnManager.DEFAULT_SPAWN;
+
+        if (location != null) player.teleport(location);
+
         ItemStack selectorItem = new SelectorItem()
                 .build();
 
@@ -39,5 +47,7 @@ public class PlayerJoinListener implements Listener {
         );
 
         playerInventory.setHeldItemSlot(4);
+
+        CitizensAPI.getNPCRegistry().sorted().forEach(npc -> NPCMethods.hide(npc, player));
     }
 }
