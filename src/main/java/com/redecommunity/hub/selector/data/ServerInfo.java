@@ -1,6 +1,6 @@
 package com.redecommunity.hub.selector.data;
 
-import com.redecommunity.api.spigot.hologram.HologramCustom;
+import com.redecommunity.api.spigot.hologram.CustomHologram;
 import com.redecommunity.api.spigot.hologram.line.TextHologramLine;
 import com.redecommunity.api.spigot.inventory.item.CustomItem;
 import com.redecommunity.common.shared.language.enums.Language;
@@ -45,7 +45,7 @@ public class ServerInfo {
 
     @Getter
     @Setter
-    private HologramCustom hologram;
+    private CustomHologram hologram;
 
     public Server getServer() {
         return ServerManager.getServer(this.serverId);
@@ -141,20 +141,18 @@ public class ServerInfo {
 
         Server server = this.getServer();
 
-        HologramCustom hologramCustom = new HologramCustom(location);
+        CustomHologram customHologram = new CustomHologram(location);
 
-        hologramCustom.spawn();
+        customHologram.spawn();
 
-        hologramCustom.appendLine(
+        customHologram.appendLine(
                 new TextHologramLine("§e" + server.getDisplayName())
         );
-        hologramCustom.appendLine(
+        customHologram.appendLine(
                 new TextHologramLine("§b" + server.getPlayerCount() + "/" + server.getSlots())
         );
 
-        hologramCustom.teleport(location);
-
-        this.hologram = hologramCustom;
+        this.hologram = customHologram;
     }
 
     public void despawn() {
@@ -162,16 +160,12 @@ public class ServerInfo {
     }
 
     public void updateHologram() {
-        HologramCustom hologramCustom = this.hologram;
+        CustomHologram customHologram = this.hologram;
 
         Server server = this.getServer();
 
-//        Location location = this.getHologramLocation();
-//
-//        hologramCustom.teleport(location);
-
-        TextHologramLine textHologramLine1 = (TextHologramLine) hologramCustom.getLine(0);
-        TextHologramLine textHologramLine2 = (TextHologramLine) hologramCustom.getLine(1);
+        TextHologramLine textHologramLine1 = (TextHologramLine) customHologram.getLine(0);
+        TextHologramLine textHologramLine2 = (TextHologramLine) customHologram.getLine(1);
 
         List<Player> players = Bukkit.getOnlinePlayers()
                 .stream()
@@ -192,9 +186,9 @@ public class ServerInfo {
     public void teleportHologram() {
         Location location = this.getHologramLocation();
 
-        HologramCustom craftHologram = this.hologram;
+        CustomHologram customHologram = this.hologram;
 
-        craftHologram.teleport(location);
+        customHologram.teleport(location);
     }
 
     private Location getHologramLocation() {
