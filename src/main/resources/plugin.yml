@@ -1,6 +1,7 @@
 name: Hub
 main: com.redecommunity.hub.Hub
 version: 1.0-SNAPSHOT
+author: Gutyerrez
 depend:
   - Api
   - Citizens
