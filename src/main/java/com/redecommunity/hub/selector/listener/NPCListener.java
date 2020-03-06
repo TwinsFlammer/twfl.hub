@@ -1,7 +1,5 @@
 package com.redecommunity.hub.selector.listener;
 
-import com.redecommunity.api.spigot.hologram.data.CustomHologram;
-import com.redecommunity.common.shared.server.data.Server;
 import com.redecommunity.hub.selector.NPCMethods;
 import com.redecommunity.hub.selector.data.ServerInfo;
 import com.redecommunity.hub.selector.manager.ServerInfoManager;
@@ -10,10 +8,6 @@ import net.citizensnpcs.api.event.NPCPushEvent;
 import net.citizensnpcs.api.event.NPCSpawnEvent;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -31,7 +25,7 @@ public class NPCListener implements Listener {
 
         if (serverInfo == null) return;
 
-        serverInfo.spawn(npc);
+        serverInfo.spawn();
     }
 
     @EventHandler
@@ -55,6 +49,6 @@ public class NPCListener implements Listener {
 
         if (serverInfo == null) return;
 
-        serverInfo.teleportHologram(npc);
+        serverInfo.teleportHologram();
     }
 }
