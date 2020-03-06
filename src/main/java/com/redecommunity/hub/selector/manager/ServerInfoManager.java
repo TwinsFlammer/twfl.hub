@@ -1,7 +1,6 @@
 package com.redecommunity.hub.selector.manager;
 
 import com.google.common.collect.Lists;
-import com.redecommunity.common.shared.Common;
 import com.redecommunity.hub.Hub;
 import com.redecommunity.hub.selector.dao.ServerInfoDAO;
 import com.redecommunity.hub.selector.data.ServerInfo;
@@ -15,7 +14,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by @SrGutyerrez
@@ -42,10 +40,8 @@ public class ServerInfoManager {
 
                                 NPC npc = ServerInfoManager.getNPC(serverInfo);
 
-                                System.out.println("É PRA SPAWNAR A PORRA DO ROLE");
-
                                 if (npc != null)
-                                    serverInfo.spawn(npc);
+                                    serverInfo.spawn();
                             } else {
                                 if (!serverInfo.isSimilar(serverInfo1)) {
                                     serverInfo1.update(serverInfo);
