@@ -1,6 +1,7 @@
 package com.redecommunity.hub.selector.data;
 
-import com.redecommunity.api.spigot.hologram.data.CustomHologram;
+import com.redecommunity.api.spigot.hologram.HologramCustom;
+import com.redecommunity.api.spigot.hologram.line.TextHologramLine;
 import com.redecommunity.api.spigot.inventory.item.CustomItem;
 import com.redecommunity.common.shared.language.enums.Language;
 import com.redecommunity.common.shared.permissions.user.data.User;
@@ -8,16 +9,19 @@ import com.redecommunity.common.shared.permissions.user.manager.UserManager;
 import com.redecommunity.common.shared.server.data.Server;
 import com.redecommunity.common.shared.server.manager.ServerManager;
 import com.redecommunity.hub.selector.exception.UnknownServerException;
+import com.redecommunity.hub.selector.manager.ServerInfoManager;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import net.citizensnpcs.api.npc.NPC;
 import org.apache.commons.lang3.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by @SrGutyerrez
@@ -41,7 +45,7 @@ public class ServerInfo {
 
     @Getter
     @Setter
-    private CustomHologram hologram;
+    private HologramCustom hologram;
 
     public Server getServer() {
         return ServerManager.getServer(this.serverId);
@@ -89,25 +93,38 @@ public class ServerInfo {
                 .onClick(event -> {
                     Player player = (Player) event.getWhoClicked();
 
-                    User user = UserManager.getUser(player.getUniqueId());
-
-                    Language language = user.getLanguage();
-
-                    if (server.inBetaVip() && !user.isVIP()) {
-                        player.sendMessage(
-                                language.getMessage("server.beta_vip")
-                        );
-                        return;
-                    }
-
-                    if (server.getPlayerCount() >= server.getSlots() && !user.isVIP()) {
-                        // adicionar a fila para conseguir entrar no servidor
-                    } else {
-                        user.connect(server);
-                    }
+                    this.connect(player);
                 });
 
         return customItem;
+    }
+
+    public void connect(Player player) {
+        User user = UserManager.getUser(player.getUniqueId());
+
+        Language language = user.getLanguage();
+
+        Server server = ServerManager.getServer(this.serverId);
+
+        if (!server.isOnline()) {
+            player.sendMessage(
+                    language.getMessage("messages.default_commands.server.offline_server")
+            );
+            return;
+        }
+
+        if (server.inBetaVip() && !user.isVIP()) {
+            player.sendMessage(
+                    language.getMessage("messages.default_commands.server.beta_vip")
+            );
+            return;
+        }
+
+        if (server.getPlayerCount() >= server.getSlots() && !user.isVIP()) {
+            // adicionar a fila para conseguir entrar no servidor
+        } else {
+            user.connect(server);
+        }
     }
 
     public void update(ServerInfo serverInfo) {
@@ -119,21 +136,25 @@ public class ServerInfo {
         this.description = serverInfo.description;
     }
 
-    public void spawn(NPC npc) {
-        Location location = this.getHologramLocation(npc);
+    public void spawn() {
+        Location location = this.getHologramLocation();
 
         Server server = this.getServer();
 
-        CustomHologram customHologram = new CustomHologram(location);
+        HologramCustom hologramCustom = new HologramCustom(location);
 
-        customHologram.appendLines(
-                "§e" + server.getDisplayName(),
-                "§b" + server.getPlayerCount() + "/" + server.getSlots()
+        hologramCustom.spawn();
+
+        hologramCustom.appendLine(
+                new TextHologramLine("§e" + server.getDisplayName())
+        );
+        hologramCustom.appendLine(
+                new TextHologramLine("§b" + server.getPlayerCount() + "/" + server.getSlots())
         );
 
-        customHologram.spawn();
+        hologramCustom.teleport(location);
 
-        this.hologram = customHologram;
+        this.hologram = hologramCustom;
     }
 
     public void despawn() {
@@ -141,33 +162,44 @@ public class ServerInfo {
     }
 
     public void updateHologram() {
-        CustomHologram customHologram = this.hologram;
+        HologramCustom hologramCustom = this.hologram;
 
         Server server = this.getServer();
 
-        System.out.println("atualiza ai tio");
+//        Location location = this.getHologramLocation();
+//
+//        hologramCustom.teleport(location);
 
-        customHologram.updateLines(
-                "§e" + server.getDisplayName(),
+        TextHologramLine textHologramLine1 = (TextHologramLine) hologramCustom.getLine(0);
+        TextHologramLine textHologramLine2 = (TextHologramLine) hologramCustom.getLine(1);
+
+        List<Player> players = Bukkit.getOnlinePlayers()
+                .stream()
+                .filter(entity -> !entity.isDead())
+                .collect(Collectors.toList());
+
+        textHologramLine1.setText(
+                "§e" + server.getDisplayName()
+        );
+        textHologramLine1.sendUpdatePacket(players);
+
+        textHologramLine2.setText(
                 "§b" + server.getPlayerCount() + "/" + server.getSlots()
         );
+        textHologramLine2.sendUpdatePacket(players);
     }
 
-    public void teleportHologram(NPC npc) {
-        Location location = this.getHologramLocation(npc);
+    public void teleportHologram() {
+        Location location = this.getHologramLocation();
 
-        CustomHologram customHologram = this.hologram;
+        HologramCustom craftHologram = this.hologram;
 
-        customHologram.teleport(location);
+        craftHologram.teleport(location);
     }
 
-    private Location getHologramLocation(NPC npc) {
-        Entity npcEntity = npc.getEntity();
+    private Location getHologramLocation() {
+        NPC npc = ServerInfoManager.getNPC(this);
 
-        if (npcEntity.getType() == EntityType.PLAYER) {
-            Player player = (Player) npcEntity;
-
-            return player.getLocation().clone().add(0,0.7,0);
-        } else return npcEntity.getLocation().clone().add(0,0.7,0);
+        return npc.getStoredLocation().clone().subtract(0, 0.3, 0);
     }
 }
