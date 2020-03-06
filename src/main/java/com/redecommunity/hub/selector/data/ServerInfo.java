@@ -194,6 +194,6 @@ public class ServerInfo {
     private Location getHologramLocation() {
         NPC npc = ServerInfoManager.getNPC(this);
 
-        return npc.getStoredLocation().clone().subtract(0, 0.3, 0);
+        return npc.getStoredLocation().clone().subtract(0, 0.2, 0);
     }
 }
