@@ -128,7 +128,7 @@ public class ScoreboardManager {
                             }
                     );
 
-                    String statusString =  server.getStatusString();
+                    String statusString = server.isOnline() ? server.getPlayerCount().toString() : server.getStatusString().substring(0, 5);
 
                     customBoard.set(score.get(), "    §f" + fancyName + " §b» §f" + statusString);
 
