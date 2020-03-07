@@ -1,7 +1,6 @@
 package com.redecommunity.hub.selector.data;
 
 import com.redecommunity.api.spigot.hologram.CustomHologram;
-import com.redecommunity.api.spigot.hologram.line.TextHologramLine;
 import com.redecommunity.api.spigot.inventory.item.CustomItem;
 import com.redecommunity.common.shared.language.enums.Language;
 import com.redecommunity.common.shared.permissions.user.data.User;
@@ -15,13 +14,9 @@ import lombok.Getter;
 import lombok.Setter;
 import net.citizensnpcs.api.npc.NPC;
 import org.apache.commons.lang3.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by @SrGutyerrez
@@ -145,11 +140,10 @@ public class ServerInfo {
 
         customHologram.spawn();
 
-        customHologram.appendLine(
-                new TextHologramLine("§e" + server.getDisplayName())
-        );
-        customHologram.appendLine(
-                new TextHologramLine("§b" + server.getPlayerCount() + "/" + server.getSlots())
+        customHologram.appendLines(
+                server.getStatusString(),
+                "§e" + server.getDisplayName(),
+                "§b" + server.getPlayerCount() + "/" + server.getSlots()
         );
 
         this.hologram = customHologram;
@@ -164,23 +158,11 @@ public class ServerInfo {
 
         Server server = this.getServer();
 
-        TextHologramLine textHologramLine1 = (TextHologramLine) customHologram.getLine(0);
-        TextHologramLine textHologramLine2 = (TextHologramLine) customHologram.getLine(1);
-
-        List<Player> players = Bukkit.getOnlinePlayers()
-                .stream()
-                .filter(entity -> !entity.isDead())
-                .collect(Collectors.toList());
-
-        textHologramLine1.setText(
-                "§e" + server.getDisplayName()
-        );
-        textHologramLine1.sendUpdatePacket(players);
-
-        textHologramLine2.setText(
+        customHologram.updateLines(
+                server.getStatusString(),
+                "§e" + server.getDisplayName(),
                 "§b" + server.getPlayerCount() + "/" + server.getSlots()
         );
-        textHologramLine2.sendUpdatePacket(players);
     }
 
     public void teleportHologram() {
@@ -194,6 +176,6 @@ public class ServerInfo {
     private Location getHologramLocation() {
         NPC npc = ServerInfoManager.getNPC(this);
 
-        return npc.getStoredLocation().clone().subtract(0, 0.2, 0);
+        return npc.getStoredLocation().clone().add(0, 0.55, 0);
     }
 }
