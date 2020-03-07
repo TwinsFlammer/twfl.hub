@@ -141,7 +141,7 @@ public class ServerInfo {
         customHologram.spawn();
 
         customHologram.appendLines(
-                "§b" + server.getPlayerCount() + "/" + server.getSlots(),
+                !server.isOnline() ? server.getStatusString() : "§b" + server.getPlayerCount() + "/" + server.getSlots(),
                 "§e" + server.getDisplayName(),
                 server.getStatus() == 0 ? null : server.getStatusString()
         );
@@ -159,7 +159,7 @@ public class ServerInfo {
         Server server = this.getServer();
 
         customHologram.updateLines(
-                "§b" + server.getPlayerCount() + "/" + server.getSlots(),
+                !server.isOnline() ? server.getStatusString() : "§b" + server.getPlayerCount() + "/" + server.getSlots(),
                 "§e" + server.getDisplayName(),
                 server.getStatus() == 0 ? null : server.getStatusString()
         );
