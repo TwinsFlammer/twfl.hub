@@ -128,9 +128,9 @@ public class ScoreboardManager {
                             }
                     );
 
-                    if (!server.isAccessible()) fancyName = server.getStatusString();
+                    String statusString =  server.getStatusString();
 
-                    customBoard.set(score.get(), "    §f" + fancyName + " §b» §f" + server.getPlayerCount());
+                    customBoard.set(score.get(), "    §f" + fancyName + " §b» §f" + statusString);
 
                     score.getAndIncrement();
                 });
