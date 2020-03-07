@@ -141,9 +141,9 @@ public class ServerInfo {
         customHologram.spawn();
 
         customHologram.appendLines(
-                server.getStatusString(),
+                "§b" + server.getPlayerCount() + "/" + server.getSlots(),
                 "§e" + server.getDisplayName(),
-                "§b" + server.getPlayerCount() + "/" + server.getSlots()
+                server.getStatus() == 0 ? null : server.getStatusString()
         );
 
         this.hologram = customHologram;
@@ -159,9 +159,9 @@ public class ServerInfo {
         Server server = this.getServer();
 
         customHologram.updateLines(
-                server.getStatusString(),
+                "§b" + server.getPlayerCount() + "/" + server.getSlots(),
                 "§e" + server.getDisplayName(),
-                "§b" + server.getPlayerCount() + "/" + server.getSlots()
+                server.getStatus() == 0 ? null : server.getStatusString()
         );
     }
 
@@ -176,6 +176,6 @@ public class ServerInfo {
     private Location getHologramLocation() {
         NPC npc = ServerInfoManager.getNPC(this);
 
-        return npc.getStoredLocation().clone().add(0, 0.55, 0);
+        return npc.getStoredLocation().clone().add(0, 0.7, 0);
     }
 }
