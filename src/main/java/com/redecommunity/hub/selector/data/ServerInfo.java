@@ -141,7 +141,7 @@ public class ServerInfo {
         customHologram.spawn();
 
         customHologram.appendLines(
-                server.getStatus() == 0 && !server.isOnline() ? server.getStatusString() : "§b" + server.getPlayerCount() + "/" + server.getSlots(),
+                this.getPlayerCount(),
                 "§e" + server.getDisplayName(),
                 server.getStatus() == 0 ? null : server.getStatusString()
         );
@@ -159,7 +159,7 @@ public class ServerInfo {
         Server server = this.getServer();
 
         customHologram.updateLines(
-                server.getStatus() == 0 && !server.isOnline() ? server.getStatusString() : "§b" + server.getPlayerCount() + "/" + server.getSlots(),
+                this.getPlayerCount(),
                 "§e" + server.getDisplayName(),
                 server.getStatus() == 0 ? null : server.getStatusString()
         );
@@ -177,5 +177,11 @@ public class ServerInfo {
         NPC npc = ServerInfoManager.getNPC(this);
 
         return npc.getStoredLocation().clone().add(0, 0.7, 0);
+    }
+
+    private String getPlayerCount() {
+        Server server = this.getServer();
+
+        return server.isOnline() ? "§b" + server.getPlayerCount() + "/" + server.getSlots() : server.getStatus() != 0 ? "§cOffline" : server.getStatusString();
     }
 }
