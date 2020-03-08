@@ -1,6 +1,8 @@
 package com.redecommunity.hub.selector.manager;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Queues;
+import com.redecommunity.common.shared.permissions.user.data.User;
 import com.redecommunity.hub.Hub;
 import com.redecommunity.hub.selector.dao.ServerInfoDAO;
 import com.redecommunity.hub.selector.data.ServerInfo;
@@ -13,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -57,8 +60,7 @@ public class ServerInfoManager {
                     }
                 },
                 0,
-                // mudar pra 15 segundos
-                20L
+                20L * 15
         );
     }
 
@@ -88,6 +90,14 @@ public class ServerInfoManager {
         return CitizensAPI.getNPCRegistry().getById(serverInfo.getNpcId());
     }
 
+    public static void removeFromQueue(User user) {
+        ServerInfoManager.servers.forEach(serverInfo -> {
+            Queue<Integer> queue = serverInfo.getQueue();
+
+            queue.removeIf(userId -> userId.equals(user.getId()));
+        });
+    }
+
     public static ServerInfo toServerInfo(ResultSet resultSet) throws SQLException {
         return new ServerInfo(
                 resultSet.getInt("id"),
@@ -99,7 +109,8 @@ public class ServerInfoManager {
                         resultSet.getInt("material_id")
                 ),
                 resultSet.getString("description"),
-                null
+                null,
+                Queues.newArrayDeque()
         );
     }
 }
