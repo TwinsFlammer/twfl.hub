@@ -5,9 +5,11 @@ import com.redecommunity.hub.selector.data.ServerInfo;
 import com.redecommunity.hub.selector.manager.ServerInfoManager;
 import net.citizensnpcs.api.event.NPCDespawnEvent;
 import net.citizensnpcs.api.event.NPCPushEvent;
+import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.event.NPCSpawnEvent;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -50,5 +52,18 @@ public class NPCListener implements Listener {
         if (serverInfo == null) return;
 
         serverInfo.teleportHologram();
+    }
+
+    @EventHandler
+    public void onInteract(NPCRightClickEvent event) {
+        NPC npc = event.getNPC();
+
+        ServerInfo serverInfo = ServerInfoManager.getServerInfo(npc);
+
+        if (serverInfo == null) return;
+
+        Player player = event.getClicker();
+
+        serverInfo.connect(player);
     }
 }
