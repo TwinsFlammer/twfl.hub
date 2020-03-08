@@ -6,6 +6,7 @@ import com.redecommunity.common.shared.permissions.group.GroupNames;
 import com.redecommunity.common.shared.permissions.user.data.User;
 import com.redecommunity.common.shared.permissions.user.manager.UserManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +24,15 @@ public class AsyncPlayerChatListener implements Listener {
 
         event.setCancelled(true);
 
-        if (!user.hasGroup(GroupNames.HELPER)) return;
+        if (!user.hasGroup(GroupNames.HELPER)) {
+            player.playSound(
+                    player.getLocation(),
+                    Sound.VILLAGER_NO,
+                    1F,
+                    1F
+            );
+            return;
+        }
 
         String message = String.format(
                 "%s§f%s §c» §7%s",
