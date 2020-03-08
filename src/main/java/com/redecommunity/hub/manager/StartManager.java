@@ -5,6 +5,7 @@ import com.redecommunity.api.spigot.commands.registry.CommandRegistry;
 import com.redecommunity.common.shared.databases.mysql.dao.Table;
 import com.redecommunity.common.shared.util.ClassGetter;
 import com.redecommunity.hub.Hub;
+import com.redecommunity.hub.queue.manager.QueueManager;
 import com.redecommunity.hub.scoreboard.manager.ScoreboardManager;
 import com.redecommunity.hub.selector.manager.ServerInfoManager;
 import com.redecommunity.hub.spawn.manager.SpawnManager;
@@ -87,5 +88,7 @@ class DataManager {
         new SpawnManager();
 
         new ServerInfoManager();
+
+        new QueueManager();
     }
 }
