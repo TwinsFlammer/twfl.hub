@@ -2,7 +2,9 @@ package com.redecommunity.hub.selector.data;
 
 import com.redecommunity.api.spigot.hologram.CustomHologram;
 import com.redecommunity.api.spigot.inventory.item.CustomItem;
+import com.redecommunity.common.shared.cooldown.manager.CooldownManager;
 import com.redecommunity.common.shared.language.enums.Language;
+import com.redecommunity.common.shared.permissions.group.GroupNames;
 import com.redecommunity.common.shared.permissions.user.data.User;
 import com.redecommunity.common.shared.permissions.user.manager.UserManager;
 import com.redecommunity.common.shared.server.data.Server;
@@ -17,6 +19,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+
+import java.util.Queue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by @SrGutyerrez
@@ -41,6 +46,9 @@ public class ServerInfo {
     @Getter
     @Setter
     private CustomHologram hologram;
+
+    @Getter
+    private final Queue<Integer> queue;
 
     public Server getServer() {
         return ServerManager.getServer(this.serverId);
@@ -97,6 +105,14 @@ public class ServerInfo {
     public void connect(Player player) {
         User user = UserManager.getUser(player.getUniqueId());
 
+        if (CooldownManager.inCooldown(user, this)) return;
+
+        CooldownManager.startCooldown(
+                user,
+                TimeUnit.SECONDS.toMillis(15),
+                this
+        );
+
         Language language = user.getLanguage();
 
         Server server = ServerManager.getServer(this.serverId);
@@ -115,8 +131,47 @@ public class ServerInfo {
             return;
         }
 
+        if (!server.isAccessible() && !user.hasGroup(GroupNames.MANAGER)) {
+            player.sendMessage(
+                    language.getMessage("messages.default_commands.server.inaccessible")
+            );
+            return;
+        }
+
         if (server.getPlayerCount() >= server.getSlots() && !user.isVIP()) {
-            // adicionar a fila para conseguir entrar no servidor
+            Boolean inQueue = this.queue.stream()
+                    .anyMatch(userId -> userId.equals(user.getId()));
+
+            if (inQueue) {
+                Integer position = 1;
+
+                for (Integer integer : this.queue) {
+                    if (integer.equals(user.getId())) break;
+
+                    position++;
+                }
+
+                player.sendMessage(
+                        String.format(
+                                language.getMessage("messages.default_commands.server.already_queued"),
+                                position
+                        )
+                );
+                return;
+            }
+
+            ServerInfoManager.removeFromQueue(user);
+
+            this.queue.add(user.getId());
+
+            Integer position = this.queue.size();
+
+            player.sendMessage(
+                    String.format(
+                            language.getMessage("messages.default_commands.server.queue_started"),
+                            position
+                    )
+            );
         } else {
             user.connect(server);
         }
