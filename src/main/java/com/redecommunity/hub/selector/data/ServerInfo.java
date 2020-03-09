@@ -109,7 +109,7 @@ public class ServerInfo {
 
         CooldownManager.startCooldown(
                 user,
-                TimeUnit.SECONDS.toMillis(15),
+                TimeUnit.SECONDS.toMillis(3),
                 this
         );
 
@@ -139,10 +139,10 @@ public class ServerInfo {
         }
 
         if (server.getPlayerCount() >= server.getSlots() && !user.isVIP()) {
-            Boolean inQueue = this.queue.stream()
+            Boolean alreadyQueuedToThisServer = this.queue.stream()
                     .anyMatch(userId -> userId.equals(user.getId()));
 
-            if (inQueue) {
+            if (alreadyQueuedToThisServer) {
                 Integer position = 1;
 
                 for (Integer integer : this.queue) {
