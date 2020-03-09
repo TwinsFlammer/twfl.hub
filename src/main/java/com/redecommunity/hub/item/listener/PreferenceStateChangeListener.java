@@ -22,7 +22,7 @@ public class PreferenceStateChangeListener implements Listener {
         if (preference != Preference.VISIBILITY) return;
 
         Arrays.stream(LobbyItem.values())
-                .filter(lobbyItem -> lobbyItem.name().startsWith("INVISIBILITY_"))
+                .filter(lobbyItem -> lobbyItem.name().startsWith("VISIBILITY_"))
                 .forEach(lobbyItem -> {
                     lobbyItem.give(player);
                 });
