@@ -49,6 +49,11 @@ public class PlayerInteractListener implements Listener {
             case VISIBILITY_OFF: {
                 Preference preference = Preference.VISIBILITY;
 
+                user.togglePreference(
+                        preference,
+                        user.isEnabled(preference)
+                );
+
                 if (CooldownManager.inCooldown(user, preference)) return;
 
                 PreferenceStateChangeEvent preferenceStateChangeEvent = new PreferenceStateChangeEvent(
@@ -58,17 +63,18 @@ public class PlayerInteractListener implements Listener {
 
                 preferenceStateChangeEvent.run();
 
-                if (preferenceStateChangeEvent.isCancelled()) return;
+                if (preferenceStateChangeEvent.isCancelled()) {
+                    user.togglePreference(
+                            preference,
+                            user.isEnabled(preference)
+                    );
+                    return;
+                }
 
                 CooldownManager.startCooldown(
                         user,
                         TimeUnit.SECONDS.toMillis(5),
                         preference
-                );
-
-                user.togglePreference(
-                        preference,
-                        user.isEnabled(preference)
                 );
                 return;
             }
