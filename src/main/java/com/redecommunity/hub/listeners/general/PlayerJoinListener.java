@@ -3,11 +3,13 @@ package com.redecommunity.hub.listeners.general;
 import com.redecommunity.api.spigot.scoreboard.CustomBoard;
 import com.redecommunity.common.shared.permissions.user.data.User;
 import com.redecommunity.common.shared.permissions.user.manager.UserManager;
+import com.redecommunity.common.shared.preference.Preference;
 import com.redecommunity.hub.item.LobbyItem;
 import com.redecommunity.hub.scoreboard.manager.ScoreboardManager;
 import com.redecommunity.hub.selector.NPCMethods;
 import com.redecommunity.hub.spawn.manager.SpawnManager;
 import net.citizensnpcs.api.CitizensAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -43,5 +45,16 @@ public class PlayerJoinListener implements Listener {
         playerInventory.setHeldItemSlot(4);
 
         CitizensAPI.getNPCRegistry().sorted().forEach(npc -> NPCMethods.hide(npc, player));
+
+        if (user.isDisabled(Preference.VISIBILITY)) {
+            Bukkit.getOnlinePlayers().forEach(player1 -> {
+                User user1 = UserManager.getUser(player1.getUniqueId());
+
+                if (user1.isDisabled(Preference.VISIBILITY))
+                    player1.hidePlayer(player);
+
+                player.hidePlayer(player1);
+            });
+        }
     }
 }
