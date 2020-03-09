@@ -1,16 +1,14 @@
 package com.redecommunity.hub.listeners.general;
 
 import com.redecommunity.api.spigot.preference.event.PreferenceStateChangeEvent;
-import com.redecommunity.common.shared.cooldown.data.Cooldown;
 import com.redecommunity.common.shared.cooldown.manager.CooldownManager;
 import com.redecommunity.common.shared.permissions.group.GroupNames;
 import com.redecommunity.common.shared.permissions.user.data.User;
 import com.redecommunity.common.shared.permissions.user.manager.UserManager;
 import com.redecommunity.common.shared.preference.Preference;
 import com.redecommunity.common.shared.server.enums.ServerType;
-import com.redecommunity.hub.item.LobbyItem;
+import com.redecommunity.hub.item.enums.LobbyItem;
 import com.redecommunity.hub.selector.inventory.SelectorInventory;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -49,31 +47,29 @@ public class PlayerInteractListener implements Listener {
         switch (lobbyItem) {
             case VISIBILITY_ON:
             case VISIBILITY_OFF: {
-                LobbyItem newLobbyItem = lobbyItem.getParent();
+                Preference preference = Preference.VISIBILITY;
+
+                if (CooldownManager.inCooldown(user, preference)) return;
 
                 PreferenceStateChangeEvent preferenceStateChangeEvent = new PreferenceStateChangeEvent(
                         user,
-                        Preference.VISIBILITY
+                        preference
                 );
 
                 preferenceStateChangeEvent.run();
 
                 if (preferenceStateChangeEvent.isCancelled()) return;
 
-                if (CooldownManager.inCooldown(user, Preference.VISIBILITY)) return;
-
                 CooldownManager.startCooldown(
                         user,
                         TimeUnit.SECONDS.toMillis(5),
-                        Preference.VISIBILITY
+                        preference
                 );
 
-                user.togglePreference(Preference.VISIBILITY, user.isEnabled(Preference.VISIBILITY));
-
-                if (user.isDisabled(Preference.VISIBILITY))
-                    Bukkit.getOnlinePlayers().forEach(player::hidePlayer);
-
-                newLobbyItem.give(player);
+                user.togglePreference(
+                        preference,
+                        user.isEnabled(preference)
+                );
                 return;
             }
             case SERVER_SELECTOR: {
