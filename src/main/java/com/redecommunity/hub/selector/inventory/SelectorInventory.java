@@ -22,6 +22,8 @@ public class SelectorInventory extends CustomPaginateInventory {
                 3
         );
 
+        this.setCancelled(true);
+
         ServerInfoManager.getServers()
                 .forEach(serverInfo -> {
                     try {
@@ -45,6 +47,8 @@ public class SelectorInventory extends CustomPaginateInventory {
                 "XOXXOXXOX",
                 "XXXXXXXXX"
         );
+
+        this.setCancelled(true);
 
         ServerManager.getServers()
                 .stream()
