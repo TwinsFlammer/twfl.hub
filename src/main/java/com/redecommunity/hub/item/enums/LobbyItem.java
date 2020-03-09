@@ -21,14 +21,14 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 @Getter
 public enum LobbyItem {
-    VISIBILITY_OFF(
+    VISIBILITY_ON(
             1,
             new CustomItem(Material.SLIME_BALL)
                     .name("§aVisibilidade dos jogadores")
                     .hideAttributes()
                     .build()
     ),
-    VISIBILITY_ON(
+    VISIBILITY_OFF(
             1,
             new CustomItem(Material.FIREWORK_CHARGE)
                     .name("§cVisibilidade dos jogadores")
