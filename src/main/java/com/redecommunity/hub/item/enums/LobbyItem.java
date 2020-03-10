@@ -90,9 +90,9 @@ public enum LobbyItem {
 
                 if (!user1.hasGroup(GroupNames.HELPER)) {
                     if (enabled) {
-                        player.hidePlayer(player1);
-                    } else {
                         player.showPlayer(player1);
+                    } else {
+                        player.hidePlayer(player1);
                     }
                 }
             });
