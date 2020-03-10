@@ -1,12 +1,15 @@
 package com.redecommunity.hub.listeners.general;
 
 import com.redecommunity.api.spigot.preference.event.PreferenceStateChangeEvent;
+import com.redecommunity.api.spigot.util.action.data.CustomAction;
 import com.redecommunity.common.shared.cooldown.manager.CooldownManager;
+import com.redecommunity.common.shared.language.enums.Language;
 import com.redecommunity.common.shared.permissions.group.GroupNames;
 import com.redecommunity.common.shared.permissions.user.data.User;
 import com.redecommunity.common.shared.permissions.user.manager.UserManager;
 import com.redecommunity.common.shared.preference.Preference;
 import com.redecommunity.common.shared.server.enums.ServerType;
+import com.redecommunity.common.shared.util.TimeFormatter;
 import com.redecommunity.hub.item.enums.LobbyItem;
 import com.redecommunity.hub.selector.inventory.SelectorInventory;
 import org.bukkit.entity.Player;
@@ -49,12 +52,28 @@ public class PlayerInteractListener implements Listener {
             case VISIBILITY_OFF: {
                 Preference preference = Preference.VISIBILITY;
 
+                if (CooldownManager.inCooldown(user, preference)) {
+                    Language language = user.getLanguage();
+
+                    CustomAction customAction = new CustomAction()
+                            .text(
+                                    String.format(
+                                            language.getMessage("preference.wait"),
+                                            TimeFormatter.format(CooldownManager.getRemainingTime(
+                                                    user,
+                                                    preference
+                                            ))
+                                    )
+                            );
+
+                    customAction.getSpigot().send(player);
+                    return;
+                }
+
                 user.togglePreference(
                         preference,
                         user.isEnabled(preference)
                 );
-
-                if (CooldownManager.inCooldown(user, preference)) return;
 
                 PreferenceStateChangeEvent preferenceStateChangeEvent = new PreferenceStateChangeEvent(
                         user,
