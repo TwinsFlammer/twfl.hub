@@ -1,6 +1,7 @@
 package com.redecommunity.hub.listeners.general;
 
 import com.redecommunity.api.spigot.scoreboard.CustomBoard;
+import com.redecommunity.api.spigot.spawn.manager.SpawnManager;
 import com.redecommunity.common.shared.permissions.group.GroupNames;
 import com.redecommunity.common.shared.permissions.user.data.User;
 import com.redecommunity.common.shared.permissions.user.manager.UserManager;
@@ -8,7 +9,6 @@ import com.redecommunity.common.shared.preference.Preference;
 import com.redecommunity.hub.item.enums.LobbyItem;
 import com.redecommunity.hub.scoreboard.manager.ScoreboardManager;
 import com.redecommunity.hub.selector.NPCMethods;
-import com.redecommunity.hub.spawn.manager.SpawnManager;
 import net.citizensnpcs.api.CitizensAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
