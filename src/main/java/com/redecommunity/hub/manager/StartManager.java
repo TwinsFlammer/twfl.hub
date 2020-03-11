@@ -8,7 +8,6 @@ import com.redecommunity.hub.Hub;
 import com.redecommunity.hub.queue.manager.QueueManager;
 import com.redecommunity.hub.scoreboard.manager.ScoreboardManager;
 import com.redecommunity.hub.selector.manager.ServerInfoManager;
-import com.redecommunity.hub.spawn.manager.SpawnManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
@@ -84,8 +83,6 @@ class TableManager {
 class DataManager {
     DataManager() {
         new ScoreboardManager();
-
-        new SpawnManager();
 
         new ServerInfoManager();
 
