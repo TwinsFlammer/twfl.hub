@@ -211,6 +211,8 @@ public class ServerInfo {
     public void updateHologram() {
         CustomHologram customHologram = this.hologram;
 
+        if (customHologram == null) return;
+
         Server server = this.getServer();
 
         customHologram.updateLines(
