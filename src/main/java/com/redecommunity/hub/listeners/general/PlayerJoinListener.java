@@ -36,6 +36,11 @@ public class PlayerJoinListener implements Listener {
 
         if (location != null) player.teleport(location);
 
+        if (user.hasGroup(GroupNames.ELITE)) {
+            player.setAllowFlight(true);
+            player.setFlying(true);
+        }
+
         PlayerInventory playerInventory = player.getInventory();
 
         playerInventory.clear();
