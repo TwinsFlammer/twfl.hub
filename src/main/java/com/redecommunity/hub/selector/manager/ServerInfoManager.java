@@ -58,6 +58,9 @@ public class ServerInfoManager {
                             }
                         });
                     }
+
+                    ServerInfoManager.servers
+                            .removeIf(serverInfo -> servers.stream().noneMatch(serverInfo1 -> serverInfo1.getId().equals(serverInfo.getId())));
                 },
                 0,
                 20L * 15
