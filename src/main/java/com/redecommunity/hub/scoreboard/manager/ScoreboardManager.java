@@ -10,10 +10,12 @@ import com.redecommunity.common.shared.permissions.user.data.User;
 import com.redecommunity.common.shared.permissions.user.manager.UserManager;
 import com.redecommunity.common.shared.server.data.Server;
 import com.redecommunity.common.shared.server.manager.ServerManager;
+import com.redecommunity.common.shared.util.Helper;
 import com.redecommunity.hub.Hub;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -127,7 +129,7 @@ public class ScoreboardManager {
                             }
                     );
 
-                    String statusString = server.isOnline() ? server.getPlayerCount().toString() : (server.getStatusString().contains(" ") ? server.getStatusString().split(" ")[1] : server.getStatusString()).substring(0, 5);
+                    String statusString = server.isOnline() ? server.getPlayerCount().toString() : (server.getStatusString().contains(" ") ? ChatColor.getLastColors(server.getStatusString()) + Helper.capitalize(server.getStatusString().split(" ")[1]) : server.getStatusString()).substring(0, 5);
 
                     customBoard.set(score.get(), "    §f" + fancyName + " §b» §f" + statusString);
 
