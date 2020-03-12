@@ -96,7 +96,6 @@ public class ScoreboardManager {
 
         ScoreboardManager.setServerList(customBoard);
 
-
         return customBoard;
     }
 
@@ -128,7 +127,7 @@ public class ScoreboardManager {
                             }
                     );
 
-                    String statusString = server.isOnline() ? server.getPlayerCount().toString() : server.getStatusString().substring(0, 5);
+                    String statusString = server.isOnline() ? server.getPlayerCount().toString() : (server.getStatusString().contains(" ") ? server.getStatusString().split(" ")[1] : server.getStatusString()).substring(0, 5);
 
                     customBoard.set(score.get(), "    §f" + fancyName + " §b» §f" + statusString);
 
