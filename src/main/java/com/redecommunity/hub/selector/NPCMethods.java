@@ -11,6 +11,8 @@ import org.bukkit.scoreboard.Team;
  */
 public class NPCMethods {
     public static void hide(NPC npc, Player player) {
+        if (npc == null || npc.getEntity() == null) return;
+
         Scoreboard scoreboard = player.getScoreboard();
         Team team = scoreboard.getTeam("ZZZ") == null ? scoreboard.registerNewTeam("ZZZ") : scoreboard.getTeam("ZZZ");
         team.setNameTagVisibility(NameTagVisibility.NEVER);
