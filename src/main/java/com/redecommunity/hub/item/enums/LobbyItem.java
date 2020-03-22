@@ -39,7 +39,7 @@ public enum LobbyItem {
             4,
             new CustomItem(Material.COMPASS)
                     .name("§bSelecionar Servidor")
-                    .lore("§7Clique com direito para escolher o servidor que deseja jogar.")
+                    .lore("§7Clique com direito para escolher", "§7o servidor que deseja jogar.")
                     .hideAttributes()
                     .build()
     ),
