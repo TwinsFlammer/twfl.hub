@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.redecommunity.api.shared.connection.manager.ProxyServerManager;
 import com.redecommunity.api.spigot.scoreboard.CustomBoard;
-import com.redecommunity.common.shared.permissions.group.GroupNames;
+import com.redecommunity.common.shared.Common;
 import com.redecommunity.common.shared.permissions.group.data.Group;
 import com.redecommunity.common.shared.permissions.user.data.User;
 import com.redecommunity.common.shared.permissions.user.manager.UserManager;
@@ -63,7 +63,7 @@ public class ScoreboardManager {
 
         CustomBoard customBoard = new CustomBoard();
 
-        customBoard.title("§c§lREDE COMMUNITY")
+        customBoard.title("§6§lREDE FOCUS")
                 .set(15, "§0")
                 .set(14, " §fOnline §c» §f" + playerCount)
                 .set(13, "§1")
@@ -76,7 +76,7 @@ public class ScoreboardManager {
         customBoard.set(3, "§2")
                 .set(2, " §fGrupo §c» §f" + prefix)
                 .set(1, "§3")
-                .set(0, "§c   redecommunity.com");
+                .set(0, "§c   " + Common.SERVER_URL);
 
         ScoreboardManager.getCustomBoards().put(
                 user.getId(),
@@ -104,7 +104,7 @@ public class ScoreboardManager {
     private static String getPrefix(User user) {
         Group group = user.getHighestGroup();
 
-        return group.getName().equals(GroupNames.DEFAULT) ? "§7Membro" : group.getFancyPrefix();
+        return group.isDefault() ? "§7Membro" : group.getFancyPrefix();
     }
 
     private static void setServerList(CustomBoard customBoard) {
