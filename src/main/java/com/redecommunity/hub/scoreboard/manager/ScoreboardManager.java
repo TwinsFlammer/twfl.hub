@@ -76,7 +76,7 @@ public class ScoreboardManager {
         customBoard.set(3, "§2")
                 .set(2, " §fGrupo §c» §f" + prefix)
                 .set(1, "§3")
-                .set(0, "§c   " + Common.SERVER_URL);
+                .set(0, "§c  " + Common.SERVER_URL);
 
         ScoreboardManager.getCustomBoards().put(
                 user.getId(),
