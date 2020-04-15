@@ -12,6 +12,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 
+import java.util.Objects;
+
 /**
  * Created by @SrGutyerrez
  */
@@ -52,6 +54,7 @@ public class SelectorInventory extends CustomPaginateInventory {
 
         ServerManager.getServers()
                 .stream()
+                .filter(Objects::nonNull)
                 .filter(Server::isLobby)
                 .forEach(server -> {
                     Server userServer = user.getServer();
