@@ -55,7 +55,7 @@ public class SelectorInventory extends CustomPaginateInventory {
         ServerManager.getServers()
                 .stream()
                 .filter(Objects::nonNull)
-                .filter(Server::isLobby)
+                .filter(server -> server.getType().equals(serverType))
                 .forEach(server -> {
                     Server userServer = user.getServer();
 
