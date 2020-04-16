@@ -89,12 +89,6 @@ public class PlayerInteractListener implements Listener {
                     );
                     return;
                 }
-
-                CooldownManager.startCooldown(
-                        user,
-                        TimeUnit.SECONDS.toMillis(5),
-                        preference
-                );
                 return;
             }
             case SERVER_SELECTOR: {
