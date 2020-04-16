@@ -79,6 +79,8 @@ public class SelectorInventory extends CustomPaginateInventory {
                                 if (server.isOnline()) user.connect(server);
                             });
 
+                    System.out.println(customItem == null);
+
                     this.addItem(customItem);
                 });
     }
