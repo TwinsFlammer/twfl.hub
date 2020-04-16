@@ -56,6 +56,7 @@ public class SelectorInventory extends CustomPaginateInventory {
                 .stream()
                 .filter(Objects::nonNull)
                 .filter(server -> server.getType().equals(serverType))
+                .sorted((server1, server2) -> server2.getName().compareTo(server1.getName()))
                 .forEach(server -> {
                     Server userServer = user.getServer();
 
