@@ -61,7 +61,7 @@ public class SelectorInventory extends CustomPaginateInventory {
 
                     CustomItem customItem = new CustomItem(Material.INK_SACK)
                             .data(userServer.isSimilar(server) ? 13 : server.isOnline() ? 10 : 8)
-                            .name((userServer.isSimilar(server) ? "§e" : server.isOnline() ? "§a" : "§c" ) + ChatColor.stripColor(server.getDisplayName()))
+                            .name((userServer.isSimilar(server) ? "§e" : server.isOnline() ? "§a" : "§c") + ChatColor.stripColor(server.getDisplayName()))
                             .lore(
                                     String.format(
                                             "§fJogadores: §7%d/%d",
@@ -70,16 +70,17 @@ public class SelectorInventory extends CustomPaginateInventory {
                                     ),
                                     "",
                                     userServer.isSimilar(server) ? "§eVocê já está conectado a este saguão!" : server.isOnline() ? "§aClique para conetar!" : "§cEste saguão está offline."
-                            )
-                            .enchant(userServer.isSimilar(server) ? Enchantment.DURABILITY : null, 1)
-                            .hideAttributes()
+                            );
+
+                    if (userServer.isSimilar(server))
+                        customItem.enchant(Enchantment.DURABILITY, 1);
+
+                    customItem.hideAttributes()
                             .onClick(event -> {
                                 if (userServer.isSimilar(server)) return;
 
                                 if (server.isOnline()) user.connect(server);
                             });
-
-                    System.out.println(customItem == null);
 
                     this.addItem(customItem);
                 });
