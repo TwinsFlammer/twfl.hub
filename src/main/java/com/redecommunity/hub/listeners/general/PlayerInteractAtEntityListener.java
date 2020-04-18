@@ -1,7 +1,5 @@
 package com.redecommunity.hub.listeners.general;
 
-import com.redecommunity.api.spigot.util.JSONText;
-import com.redecommunity.common.shared.Common;
 import com.redecommunity.common.shared.permissions.group.GroupNames;
 import com.redecommunity.common.shared.permissions.user.data.User;
 import com.redecommunity.common.shared.permissions.user.manager.UserManager;
@@ -24,23 +22,8 @@ public class PlayerInteractAtEntityListener implements Listener {
 
         Entity entity = event.getRightClicked();
 
-        System.out.println("interagiu");
-
-        if (entity instanceof ItemFrame) {
+        if (entity instanceof ItemFrame)
             event.setCancelled(true);
-
-            new JSONText()
-                    .text("\n")
-                    .next()
-                    .text("§aClique ")
-                    .next()
-                    .text("§lAQUI")
-                    .clickOpenURL(Common.SERVER_URL)
-                    .next()
-                    .text("§r§apara acessar o site!")
-                    .next()
-                    .send(player);
-        }
 
         if (user.hasGroup(GroupNames.MANAGER)) return;
 
