@@ -30,10 +30,6 @@ import org.bukkit.inventory.PlayerInventory;
  * Created by @SrGutyerrez
  */
 public class PlayerInteractListener implements Listener {
-    private final Double minX = 9.7, maxX = 10.0,
-            minY = 39.0, maxY = 43.2,
-            minZ = -2.7, maxZ = 3.7;
-
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
@@ -48,16 +44,18 @@ public class PlayerInteractListener implements Listener {
 
         Block block = event.getClickedBlock();
 
+        System.out.println(block == null);
+
         if (block != null) {
             Integer x = block.getX(), y = block.getY(), z = block.getZ();
 
             Cuboid cuboid = new Cuboid(
                     9,
-                    39,
-                    -2,
+                    40,
+                    -1,
                     10,
-                    43,
-                    3,
+                    44,
+                    4,
                     player.getWorld()
             );
 
@@ -70,12 +68,14 @@ public class PlayerInteractListener implements Listener {
                 new JSONText()
                         .text("\n")
                         .next()
-                        .text("§aClique ")
+                        .text("  §aClique ")
                         .next()
-                        .text("§lAQUI")
+                        .text("§a§lAQUI")
                         .clickOpenURL(Common.SERVER_URL)
                         .next()
-                        .text("§r§apara acessar o site!")
+                        .text(" §r§apara acessar o site!")
+                        .next()
+                        .text("\n")
                         .next()
                         .send(player);
             }
