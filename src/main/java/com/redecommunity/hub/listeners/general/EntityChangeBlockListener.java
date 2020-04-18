@@ -6,6 +6,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockFadeEvent;
+import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 
 /**
@@ -30,5 +32,19 @@ public class EntityChangeBlockListener implements Listener {
 
             blockState.update();
         }
+    }
+
+    @EventHandler
+    public void onChange(BlockFromToEvent event) {
+        event.setCancelled(true);
+
+        System.out.println("Foi");
+    }
+
+    @EventHandler
+    public void onFade(BlockFadeEvent event) {
+        event.setCancelled(true);
+
+        System.out.println("aeaeu");
     }
 }
