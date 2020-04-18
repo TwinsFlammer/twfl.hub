@@ -37,14 +37,10 @@ public class EntityChangeBlockListener implements Listener {
     @EventHandler
     public void onChange(BlockFromToEvent event) {
         event.setCancelled(true);
-
-        System.out.println("Foi");
     }
 
     @EventHandler
     public void onFade(BlockFadeEvent event) {
         event.setCancelled(true);
-
-        System.out.println("aeaeu");
     }
 }
