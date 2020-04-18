@@ -214,6 +214,8 @@ public class ServerInfo {
         if (customHologram == null)
             this.spawn();
 
+        if (customHologram == null) return;
+
         Server server = this.getServer();
 
         customHologram.updateLines(
