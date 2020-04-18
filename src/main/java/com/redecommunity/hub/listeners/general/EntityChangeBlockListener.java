@@ -21,7 +21,7 @@ public class EntityChangeBlockListener implements Listener {
         Entity entity = event.getEntity();
         Block block = event.getBlock();
 
-        if (entity.getType() == EntityType.FALLING_BLOCK) {
+//        if (entity.getType() == EntityType) {
             BlockState blockState = block.getState();
 
             blockState.update();
@@ -33,7 +33,7 @@ public class EntityChangeBlockListener implements Listener {
             event.setCancelled(true);
 
             blockState.update();
-        }
+//        }
     }
 
     @EventHandler
