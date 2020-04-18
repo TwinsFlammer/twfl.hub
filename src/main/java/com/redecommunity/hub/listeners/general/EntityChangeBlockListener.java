@@ -1,5 +1,6 @@
 package com.redecommunity.hub.listeners.general;
 
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Entity;
@@ -21,7 +22,7 @@ public class EntityChangeBlockListener implements Listener {
         Entity entity = event.getEntity();
         Block block = event.getBlock();
 
-//        if (entity.getType() == EntityType) {
+        if (entity.getType() == EntityType.FALLING_BLOCK) {
             BlockState blockState = block.getState();
 
             blockState.update();
@@ -33,7 +34,7 @@ public class EntityChangeBlockListener implements Listener {
             event.setCancelled(true);
 
             blockState.update();
-//        }
+        }
     }
 
     @EventHandler
@@ -48,7 +49,19 @@ public class EntityChangeBlockListener implements Listener {
 
     @EventHandler
     public void onFade(BlockFadeEvent event) {
+        BlockState blockState = event.getNewState();
+
+        Location location = blockState.getLocation();
+
+        Block block = location.getBlock();
+
+        blockState.update();
+
+        block.setType(blockState.getType());
+
         event.setCancelled(true);
+
+        blockState.update();
     }
 
     @EventHandler
