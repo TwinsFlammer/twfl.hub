@@ -12,6 +12,8 @@ import com.redecommunity.common.shared.server.enums.ServerType;
 import com.redecommunity.common.shared.util.TimeFormatter;
 import com.redecommunity.hub.item.enums.LobbyItem;
 import com.redecommunity.hub.selector.inventory.SelectorInventory;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -38,6 +40,12 @@ public class PlayerInteractListener implements Listener {
         Action action = event.getAction();
 
         if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return;
+
+        Block block = event.getClickedBlock();
+
+        if (block != null && block.getType() == Material.ITEM_FRAME) {
+            System.out.println("aueuauea");
+        }
 
         PlayerInventory playerInventory = player.getInventory();
 
