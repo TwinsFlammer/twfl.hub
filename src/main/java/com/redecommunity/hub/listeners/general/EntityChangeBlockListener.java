@@ -59,17 +59,19 @@ public class EntityChangeBlockListener implements Listener {
 
         blockState.update();
 
-        block.setType(block.getType());
+        block.setType(oldBlock.getType());
 
         blockState.update();
 
-        blockState.setType(block.getType());
+        blockState.setType(oldBlock.getType());
 
         blockState.update();
 
         event.setCancelled(true);
 
         blockState.update();
+
+        System.out.println("Caindo...");
     }
 
     @EventHandler
