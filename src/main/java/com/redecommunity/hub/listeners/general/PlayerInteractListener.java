@@ -16,6 +16,7 @@ import com.redecommunity.hub.item.enums.LobbyItem;
 import com.redecommunity.hub.selector.inventory.SelectorInventory;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -48,20 +49,24 @@ public class PlayerInteractListener implements Listener {
 
         Integer x = block.getX(), y = block.getY(), z = block.getZ();
 
-        if (x >= minX || x <= maxX || y >= minY || y <= maxY || z <= minZ || z >= maxZ)
-            System.out.println("aeaeae");
+        if (x >= minX || x <= maxX || y >= minY || y <= maxY || z <= minZ || z >= maxZ) {
+            event.setCancelled(true);
 
-//        new JSONText()
-//                .text("\n")
-//                .next()
-//                .text("§aClique ")
-//                .next()
-//                .text("§lAQUI")
-//                .clickOpenURL(Common.SERVER_URL)
-//                .next()
-//                .text("§r§apara acessar o site!")
-//                .next()
-//                .send(player);
+            event.setUseInteractedBlock(Event.Result.DENY);
+            event.setUseItemInHand(Event.Result.DENY);
+
+            new JSONText()
+                    .text("\n")
+                    .next()
+                    .text("§aClique ")
+                    .next()
+                    .text("§lAQUI")
+                    .clickOpenURL(Common.SERVER_URL)
+                    .next()
+                    .text("§r§apara acessar o site!")
+                    .next()
+                    .send(player);
+        }
 
         PlayerInventory playerInventory = player.getInventory();
 
