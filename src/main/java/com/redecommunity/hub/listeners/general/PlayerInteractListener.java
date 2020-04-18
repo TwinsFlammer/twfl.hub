@@ -44,9 +44,12 @@ public class PlayerInteractListener implements Listener {
 
         Block block = event.getClickedBlock();
 
-        System.out.println(block == null);
-
         if (block != null) {
+            event.setCancelled(true);
+
+            event.setUseInteractedBlock(Event.Result.DENY);
+            event.setUseItemInHand(Event.Result.DENY);
+
             Integer x = block.getX(), y = block.getY(), z = block.getZ();
 
             Cuboid cuboid = new Cuboid(
@@ -60,11 +63,6 @@ public class PlayerInteractListener implements Listener {
             );
 
             if (cuboid.contains(x, y, z)) {
-                event.setCancelled(true);
-
-                event.setUseInteractedBlock(Event.Result.DENY);
-                event.setUseItemInHand(Event.Result.DENY);
-
                 new JSONText()
                         .text("\n")
                         .next()
