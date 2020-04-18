@@ -211,7 +211,8 @@ public class ServerInfo {
     public void updateHologram() {
         CustomHologram customHologram = this.hologram;
 
-        if (customHologram == null) return;
+        if (customHologram == null)
+            this.spawn();
 
         Server server = this.getServer();
 
@@ -227,7 +228,9 @@ public class ServerInfo {
 
         CustomHologram customHologram = this.hologram;
 
-        customHologram.teleport(location);
+        if (customHologram == null)
+            this.spawn();
+        else customHologram.teleport(location);
     }
 
     private Location getHologramLocation() {
