@@ -49,6 +49,8 @@ public class EntityChangeBlockListener implements Listener {
 
     @EventHandler
     public void onFade(BlockFadeEvent event) {
+        Block oldBlock = event.getBlock();
+
         BlockState blockState = event.getNewState();
 
         Location location = blockState.getLocation();
@@ -57,7 +59,13 @@ public class EntityChangeBlockListener implements Listener {
 
         blockState.update();
 
-        block.setType(blockState.getType());
+        block.setType(block.getType());
+
+        blockState.update();
+
+        blockState.setType(block.getType());
+
+        blockState.update();
 
         event.setCancelled(true);
 
