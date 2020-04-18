@@ -28,7 +28,11 @@ public class PlayerInteractAtEntityListener implements Listener {
 
         Entity entity = event.getRightClicked();
 
-        if (entity instanceof ItemFrame)
+        System.out.println("interagiu");
+
+        if (entity instanceof ItemFrame) {
+            event.setCancelled(true);
+
             new JSONText()
                     .text("\n")
                     .next()
@@ -40,5 +44,6 @@ public class PlayerInteractAtEntityListener implements Listener {
                     .text("§r§apara acessar o site!")
                     .next()
                     .send(player);
+        }
     }
 }
