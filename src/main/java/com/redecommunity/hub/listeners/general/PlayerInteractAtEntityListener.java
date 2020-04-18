@@ -22,10 +22,6 @@ public class PlayerInteractAtEntityListener implements Listener {
 
         User user = UserManager.getUser(player.getUniqueId());
 
-        if (user.hasGroup(GroupNames.MANAGER)) return;
-
-        event.setCancelled(true);
-
         Entity entity = event.getRightClicked();
 
         System.out.println("interagiu");
@@ -45,5 +41,9 @@ public class PlayerInteractAtEntityListener implements Listener {
                     .next()
                     .send(player);
         }
+
+        if (user.hasGroup(GroupNames.MANAGER)) return;
+
+        event.setCancelled(true);
     }
 }
