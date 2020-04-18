@@ -1,16 +1,11 @@
 package com.redecommunity.hub.listeners.general;
 
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockFadeEvent;
-import org.bukkit.event.block.BlockFromToEvent;
-import org.bukkit.event.block.BlockSpreadEvent;
-import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 
 /**
@@ -35,47 +30,5 @@ public class EntityChangeBlockListener implements Listener {
 
             blockState.update();
         }
-    }
-
-    @EventHandler
-    public void onLeavesDecay(LeavesDecayEvent event) {
-        event.setCancelled(true);
-    }
-
-    @EventHandler
-    public void onChange(BlockFromToEvent event) {
-        event.setCancelled(true);
-    }
-
-    @EventHandler
-    public void onFade(BlockFadeEvent event) {
-        Block oldBlock = event.getBlock();
-
-        BlockState blockState = event.getNewState();
-
-        Location location = blockState.getLocation();
-
-        Block block = location.getBlock();
-
-        blockState.update();
-
-        block.setType(oldBlock.getType());
-
-        blockState.update();
-
-        blockState.setType(oldBlock.getType());
-
-        blockState.update();
-
-        event.setCancelled(true);
-
-        blockState.update();
-
-        System.out.println("Caindo...");
-    }
-
-    @EventHandler
-    public void onBlockSpread(BlockSpreadEvent event) {
-        event.setCancelled(true);
     }
 }
