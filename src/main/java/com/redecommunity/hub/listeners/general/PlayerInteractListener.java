@@ -26,6 +26,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by @SrGutyerrez
  */
@@ -63,6 +65,8 @@ public class PlayerInteractListener implements Listener {
             );
 
             if (cuboid.contains(x, y, z)) {
+                if (CooldownManager.inCooldown(user, "HUB_ITEM_FRAME")) return;
+
                 new JSONText()
                         .text("\n")
                         .next()
@@ -76,6 +80,12 @@ public class PlayerInteractListener implements Listener {
                         .text("\n")
                         .next()
                         .send(player);
+
+                CooldownManager.startCooldown(
+                        user,
+                        TimeUnit.SECONDS.toMillis(1),
+                        "HUB_ITEM_FRAME"
+                );
             }
         }
 
