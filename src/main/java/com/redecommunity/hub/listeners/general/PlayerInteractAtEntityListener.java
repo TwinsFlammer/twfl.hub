@@ -1,8 +1,12 @@
 package com.redecommunity.hub.listeners.general;
 
+import com.redecommunity.api.spigot.util.JSONText;
+import com.redecommunity.common.shared.Common;
 import com.redecommunity.common.shared.permissions.group.GroupNames;
 import com.redecommunity.common.shared.permissions.user.data.User;
 import com.redecommunity.common.shared.permissions.user.manager.UserManager;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,5 +25,20 @@ public class PlayerInteractAtEntityListener implements Listener {
         if (user.hasGroup(GroupNames.MANAGER)) return;
 
         event.setCancelled(true);
+
+        Entity entity = event.getRightClicked();
+
+        if (entity instanceof ItemFrame)
+            new JSONText()
+                    .text("\n")
+                    .next()
+                    .text("§aClique ")
+                    .next()
+                    .text("§lAQUI")
+                    .clickOpenURL(Common.SERVER_URL)
+                    .next()
+                    .text("§r§apara acessar o site!")
+                    .next()
+                    .send(player);
     }
 }
