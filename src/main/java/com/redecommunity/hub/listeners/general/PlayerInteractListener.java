@@ -1,6 +1,7 @@
 package com.redecommunity.hub.listeners.general;
 
 import com.redecommunity.api.spigot.preference.event.PreferenceStateChangeEvent;
+import com.redecommunity.api.spigot.util.Cuboid;
 import com.redecommunity.api.spigot.util.JSONText;
 import com.redecommunity.api.spigot.util.action.data.CustomAction;
 import com.redecommunity.common.shared.Common;
@@ -47,25 +48,37 @@ public class PlayerInteractListener implements Listener {
 
         Block block = event.getClickedBlock();
 
-        Integer x = block.getX(), y = block.getY(), z = block.getZ();
+        if (block != null) {
+            Integer x = block.getX(), y = block.getY(), z = block.getZ();
 
-        if (x >= minX || x <= maxX || y >= minY || y <= maxY || z <= minZ || z >= maxZ) {
-            event.setCancelled(true);
+            Cuboid cuboid = new Cuboid(
+                    9,
+                    39,
+                    -2,
+                    10,
+                    43,
+                    3,
+                    player.getWorld()
+            );
 
-            event.setUseInteractedBlock(Event.Result.DENY);
-            event.setUseItemInHand(Event.Result.DENY);
+            if (cuboid.contains(x, y, z)) {
+                event.setCancelled(true);
 
-            new JSONText()
-                    .text("\n")
-                    .next()
-                    .text("§aClique ")
-                    .next()
-                    .text("§lAQUI")
-                    .clickOpenURL(Common.SERVER_URL)
-                    .next()
-                    .text("§r§apara acessar o site!")
-                    .next()
-                    .send(player);
+                event.setUseInteractedBlock(Event.Result.DENY);
+                event.setUseItemInHand(Event.Result.DENY);
+
+                new JSONText()
+                        .text("\n")
+                        .next()
+                        .text("§aClique ")
+                        .next()
+                        .text("§lAQUI")
+                        .clickOpenURL(Common.SERVER_URL)
+                        .next()
+                        .text("§r§apara acessar o site!")
+                        .next()
+                        .send(player);
+            }
         }
 
         PlayerInventory playerInventory = player.getInventory();
