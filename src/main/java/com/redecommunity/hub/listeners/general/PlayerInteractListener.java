@@ -55,9 +55,9 @@ public class PlayerInteractListener implements Listener {
             Integer x = block.getX(), y = block.getY(), z = block.getZ();
 
             Cuboid cuboid = new Cuboid(
-                    5,
+                    9,
                     40,
-                    -1,
+                    -3,
                     10,
                     44,
                     4,
