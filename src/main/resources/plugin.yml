@@ -1,5 +1,5 @@
 name: Hub
-main: com.redecommunity.hub.Hub
+main: com.redefocus.hub.Hub
 version: 1.0-SNAPSHOT
 author: Gutyerrez
 depend:
