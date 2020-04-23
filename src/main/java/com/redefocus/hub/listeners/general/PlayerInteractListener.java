@@ -2,8 +2,8 @@ package com.redefocus.hub.listeners.general;
 
 import com.redefocus.api.spigot.preference.event.PreferenceStateChangeEvent;
 import com.redefocus.api.spigot.util.Cuboid;
-import com.redefocus.api.spigot.util.JSONText;
 import com.redefocus.api.spigot.util.action.data.CustomAction;
+import com.redefocus.api.spigot.util.jsontext.data.JSONText;
 import com.redefocus.common.shared.Common;
 import com.redefocus.common.shared.cooldown.manager.CooldownManager;
 import com.redefocus.common.shared.language.enums.Language;
