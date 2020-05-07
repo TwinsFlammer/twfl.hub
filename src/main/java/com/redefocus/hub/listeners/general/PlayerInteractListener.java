@@ -15,6 +15,7 @@ import com.redefocus.common.shared.server.enums.ServerType;
 import com.redefocus.common.shared.util.TimeFormatter;
 import com.redefocus.hub.item.enums.LobbyItem;
 import com.redefocus.hub.selector.inventory.SelectorInventory;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -46,7 +47,7 @@ public class PlayerInteractListener implements Listener {
 
         Block block = event.getClickedBlock();
 
-        if (block != null) {
+        if (block != null && block.getType() == Material.ITEM_FRAME || block.getType() == Material.MAP) {
             event.setCancelled(true);
 
             event.setUseInteractedBlock(Event.Result.DENY);
