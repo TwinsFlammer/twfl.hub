@@ -27,12 +27,19 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by @SrGutyerrez
  */
 public class PlayerInteractListener implements Listener {
+    private final Material[] DISABLED_INTERACTION = {
+            Material.ITEM_FRAME,
+            Material.MAP,
+            Material.EMPTY_MAP
+    };
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
@@ -47,7 +54,7 @@ public class PlayerInteractListener implements Listener {
 
         Block block = event.getClickedBlock();
 
-        if (block != null && block.getType() == Material.ITEM_FRAME || block.getType() == Material.MAP) {
+        if (block != null && Arrays.asList(this.DISABLED_INTERACTION).contains(block.getType())) {
             event.setCancelled(true);
 
             event.setUseInteractedBlock(Event.Result.DENY);
