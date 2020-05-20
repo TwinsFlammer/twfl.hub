@@ -1,5 +1,5 @@
 name: Hub
-main: com.redefocus.hub.Hub
+main: br.com.twinsflammer.hub.Hub
 version: 1.0-SNAPSHOT
 author: Gutyerrez
 depend:
