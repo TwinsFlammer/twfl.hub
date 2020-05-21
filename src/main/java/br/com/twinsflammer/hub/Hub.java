@@ -1,13 +1,13 @@
 package br.com.twinsflammer.hub;
 
 import br.com.twinsflammer.hub.manager.StartManager;
-import br.com.twinsflammer.api.spigot.FocusPlugin;
+import br.com.twinsflammer.api.spigot.TwinsPlugin;
 import org.bukkit.Server;
 
 /**
  * Created by @SrGutyerrez
  */
-public class Hub extends FocusPlugin {
+public class Hub extends TwinsPlugin {
     private static Hub instance;
 
     public Hub() {
