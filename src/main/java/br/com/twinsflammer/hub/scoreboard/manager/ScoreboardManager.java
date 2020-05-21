@@ -63,9 +63,9 @@ public class ScoreboardManager {
 
         CustomBoard customBoard = new CustomBoard();
 
-        customBoard.title("§6§lREDE FOCUS")
+        customBoard.title("§c§lTWINS FLAMMER")
                 .set(15, "§0")
-                .set(14, " §fOnline §c» §f" + playerCount)
+                .set(14, " §fOnline: §c" + playerCount)
                 .set(13, "§1")
                 .set(12, "  §fFactions");
 
@@ -74,7 +74,7 @@ public class ScoreboardManager {
         String prefix = ScoreboardManager.getPrefix(user);
 
         customBoard.set(3, "§2")
-                .set(2, " §fGrupo §c» §f" + prefix)
+                .set(2, " §fGrupo: " + prefix)
                 .set(1, "§3")
                 .set(0, "§c  " + Common.SERVER_URL);
 
@@ -93,8 +93,8 @@ public class ScoreboardManager {
 
         String prefix = ScoreboardManager.getPrefix(user);
 
-        customBoard.set(14, " §fOnline §c» §f" + playerCount)
-                .set(2, " §fGrupo §c» §f" + prefix);
+        customBoard.set(14, " §fOnline: §c" + playerCount)
+                .set(2, " §fGrupo: " + prefix);
 
         ScoreboardManager.setServerList(customBoard);
 
@@ -131,7 +131,7 @@ public class ScoreboardManager {
 
                     String statusString = server.isOnline() ? server.getPlayerCount().toString() : (server.getStatusString().contains(" ") ? ChatColor.getLastColors(server.getStatusString()) + Helper.capitalize(server.getStatusString().split(" ")[1]) : server.getStatusString()).substring(0, 5);
 
-                    customBoard.set(score.get(), "    §f" + fancyName + " §b» §f" + statusString);
+                    customBoard.set(score.get(), "    §f" + fancyName + ": §b" + statusString);
 
                     score.getAndIncrement();
                 });
