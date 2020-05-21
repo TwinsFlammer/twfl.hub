@@ -67,7 +67,7 @@ public class ScoreboardManager {
                 .set(15, "§0")
                 .set(14, " §fOnline: §c" + playerCount)
                 .set(13, "§1")
-                .set(12, "  §fFactions");
+                .set(12, " §fFactions");
 
         ScoreboardManager.setServerList(customBoard);
 
@@ -131,7 +131,7 @@ public class ScoreboardManager {
 
                     String statusString = server.isOnline() ? server.getPlayerCount().toString() : (server.getStatusString().contains(" ") ? ChatColor.getLastColors(server.getStatusString()) + Helper.capitalize(server.getStatusString().split(" ")[1]) : server.getStatusString()).substring(0, 5);
 
-                    customBoard.set(score.get(), "    §f" + fancyName + ": §b" + statusString);
+                    customBoard.set(score.get(), "   §f" + fancyName + ": §b" + statusString);
 
                     score.getAndIncrement();
                 });
