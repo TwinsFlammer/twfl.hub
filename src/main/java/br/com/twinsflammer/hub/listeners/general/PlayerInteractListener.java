@@ -15,10 +15,7 @@ import br.com.twinsflammer.common.shared.server.enums.ServerType;
 import br.com.twinsflammer.common.shared.util.TimeFormatter;
 import br.com.twinsflammer.hub.item.enums.LobbyItem;
 import br.com.twinsflammer.hub.selector.inventory.SelectorInventory;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -27,19 +24,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
-
 /**
  * Created by @SrGutyerrez
  */
 public class PlayerInteractListener implements Listener {
-    private final Material[] DISABLED_INTERACTION = {
-            Material.ITEM_FRAME,
-            Material.MAP,
-            Material.EMPTY_MAP
-    };
-
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
@@ -51,51 +39,6 @@ public class PlayerInteractListener implements Listener {
         Action action = event.getAction();
 
         if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return;
-
-        Block block = event.getClickedBlock();
-
-        if (block != null && Arrays.asList(this.DISABLED_INTERACTION).contains(block.getType())) {
-            event.setCancelled(true);
-
-            event.setUseInteractedBlock(Event.Result.DENY);
-            event.setUseItemInHand(Event.Result.DENY);
-
-            Integer x = block.getX(), y = block.getY(), z = block.getZ();
-
-            Cuboid cuboid = new Cuboid(
-                    9,
-                    40,
-                    -3,
-                    10,
-                    44,
-                    4,
-                    player.getWorld()
-            );
-
-            if (cuboid.contains(x, y, z)) {
-                if (CooldownManager.inCooldown(user, "HUB_ITEM_FRAME")) return;
-
-                new JSONText()
-                        .text("\n")
-                        .next()
-                        .text("  §aClique ")
-                        .next()
-                        .text("§a§lAQUI")
-                        .clickOpenURL(Common.SERVER_URL)
-                        .next()
-                        .text(" §r§apara acessar o site!")
-                        .next()
-                        .text("\n")
-                        .next()
-                        .send(player);
-
-                CooldownManager.startCooldown(
-                        user,
-                        TimeUnit.SECONDS.toMillis(1),
-                        "HUB_ITEM_FRAME"
-                );
-            }
-        }
 
         PlayerInventory playerInventory = player.getInventory();
 
