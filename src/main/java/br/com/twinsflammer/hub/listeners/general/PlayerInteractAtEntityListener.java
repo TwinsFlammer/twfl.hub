@@ -4,6 +4,7 @@ import br.com.twinsflammer.common.shared.permissions.group.GroupNames;
 import br.com.twinsflammer.common.shared.permissions.user.data.User;
 import br.com.twinsflammer.common.shared.permissions.user.manager.UserManager;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,8 +23,9 @@ public class PlayerInteractAtEntityListener implements Listener {
 
         Entity entity = event.getRightClicked();
 
-        if (entity instanceof ItemFrame)
-            event.setCancelled(true);
+        if (entity.getType() == EntityType.ITEM_FRAME) {
+            System.out.println("Item frame");
+        }
 
         if (user.hasGroup(GroupNames.MANAGER)) return;
 
