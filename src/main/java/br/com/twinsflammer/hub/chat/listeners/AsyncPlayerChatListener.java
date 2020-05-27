@@ -24,7 +24,7 @@ public class AsyncPlayerChatListener implements Listener {
 
         event.setCancelled(true);
 
-        if (!user.hasGroup(GroupNames.FARMER)) {
+        if (!user.hasGroup(GroupNames.ADMINISTRATOR)) {
             player.playSound(
                     player.getLocation(),
                     Sound.VILLAGER_NO,
